@@ -1,54 +1,63 @@
-// Create the container and add it to the document body
-const container = document.createElement("div");
-container.className = "grid";
-document.body.appendChild(container);
+// Create and append the main container and grid container dynamically
+const mainContainer = document.createElement("div");
+mainContainer.className = "container";
+document.body.appendChild(mainContainer);
+
+const gridContainer = document.createElement("div");
+gridContainer.className = "grid";
+mainContainer.appendChild(gridContainer);
 
 // Function to populate the grid with specified rows and columns
 function populate(rows, cols) {
-    // Clear existing grid boxes
-    container.innerHTML = '';
+    gridContainer.innerHTML = ''; // Clear any existing grid boxes
 
-    // Create and append new grid boxes
-    for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < cols; j++) {
-            const newDiv = document.createElement("div");
-            newDiv.className = "grid-box";
-            container.appendChild(newDiv);
-        }
+    // Adjust container width if columns exceed 50
+    if (cols > 50) {
+        mainContainer.style.maxWidth = "100vw"; // Allow the grid to grow wider
+    } else {
+        mainContainer.style.maxWidth = "90vmin"; // Constrain the grid to the smaller dimension
     }
 
-    // Re-attach event listeners to new grid boxes
-    const gridBoxes = document.querySelectorAll(".grid-box"); // Correct class name
+    // Set CSS variables for rows and columns
+    gridContainer.style.setProperty('--cols', cols);
+    gridContainer.style.setProperty('--rows', rows);
+
+    // Create and append grid boxes
+    for (let i = 0; i < rows * cols; i++) {
+        const newDiv = document.createElement("div");
+        newDiv.className = "grid-box";
+        gridContainer.appendChild(newDiv);
+    }
+
+    // Attach event listeners to grid boxes
+    const gridBoxes = document.querySelectorAll(".grid-box");
     gridBoxes.forEach((gridBox) => {
         gridBox.addEventListener('mouseover', (event) => {
-            let target = event.target;
-            target.style.backgroundColor = "blue";
+            event.target.style.backgroundColor = "blue";
         });
 
-        // Add click event to reset the background color
-        gridBox.addEventListener('click', (click) => {
-            let target = click.target;
-            target.style.backgroundColor = "white";
+        gridBox.addEventListener('click', (event) => {
+            event.target.style.backgroundColor = "lightGray";
         });
     });
 }
 
-// Create and append the prompt button
+// Create and append the button for grid layout dynamically
 const buttonDiv = document.createElement("div");
-const promptBtn = document.createElement("button");
 buttonDiv.className = "button-div";
+const promptBtn = document.createElement("button");
 promptBtn.textContent = "Grid Layout";
 buttonDiv.appendChild(promptBtn);
-document.body.appendChild(buttonDiv);
+mainContainer.appendChild(buttonDiv);
 
-// Add event listener to the button
+// Add event listener to the button to prompt for grid size
 promptBtn.addEventListener('click', () => {
     let height = parseInt(prompt("Enter a grid height (max 100): "), 10);
     let width = parseInt(prompt("Enter a grid width (max 100): "), 10);
 
-    // Validate inputs
-    if (isNaN(height) || isNaN(width) || height <= 0 || width <= 0 || height >= 100 || width >= 100) {
-        alert("Please enter valid positive numbers less than 100 for height and width.");
+    // Validate input
+    if (isNaN(height) || isNaN(width) || height <= 0 || width <= 0 || height > 100 || width > 100) {
+        alert("Please enter valid positive numbers less than or equal to 100 for height and width.");
         return;
     }
 

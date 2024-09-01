@@ -1,62 +1,42 @@
 body {
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 0;
     padding: 0;
 }
 
-.grid {
+.container {
     display: flex;
-    flex-wrap: wrap; /* Allow items to wrap to the next line */
-    width:75%;
-    max-width: 375px; /* Optional: constrain max width */
-    aspect-ratio: 1 / 1; /* Maintain a square aspect ratio */
-    margin: 0;
-    padding: 0;
-}
-
-.grid-box {
-    flex: 1 0 25%; /* Grow to fill space, basis 25% for 4 items per row */
-    display: flex;
-    justify-content: center; /* Center content horizontally */
-    align-items: center; /* Center content vertically */
-    border: 2px solid black;
-    box-sizing: border-box; /* Include border in the element's total width and height */
-}
-
-body {
-    height: 100vh;
-    display: flex;
-    flex-direction: column; /* Stack items vertically */
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 0;
-    padding: 0;
+    width: 90%;
+    max-width: 90vmin; /* Constrain max width to 90% of the viewport's smaller dimension */
 }
 
 .grid {
     display: flex;
-    flex-wrap: wrap; /* Allow items to wrap to the next line */
-    width: 75%;
-    max-width: 375px; /* Optional: constrain max width */
-    aspect-ratio: 1 / 1; /* Maintain a square aspect ratio */
-    margin: 0;
-    padding: 0;
+    flex-wrap: wrap;
+    gap: 0; /* Remove spaces between grid items */
+    width: 100%;
+    max-height: 90vmin; /* Ensure grid height fits within the viewport */
+    margin-bottom: 10px; /* Adjust margin as needed */
 }
 
 .grid-box {
-    flex: 1 0 25%; /* Grow to fill space, basis 25% for 4 items per row */
-    display: flex;
-    justify-content: center; /* Center content horizontally */
-    align-items: center; /* Center content vertically */
+    background-color: lightgray;
+    flex: 1 0 auto;
+    width: calc(100% / var(--cols) - 0px); /* Adjust for no gap */
+    height: calc(100% / var(--rows) - 0px); /* Adjust for no gap */
+    box-sizing: border-box;
     border: 2px solid black;
-    box-sizing: border-box; /* Include border in the element's total width and height */
+    aspect-ratio: 1 / 1; /* Ensure each grid box is square */
 }
 
 .button-div {
-    margin-top: 20px; /* Space between the grid and button */
-    text-align: center; /* Center the button inside the div */
+    text-align: center;
+    margin-top: 10px; /* Space between grid and button */
 }
-
